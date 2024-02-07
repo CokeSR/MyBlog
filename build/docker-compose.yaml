@@ -1,0 +1,57 @@
+version: "3.9"
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.10.4.0/24
+          gateway: 172.10.4.254
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: Halo-Proxy
+    restart: always
+    ports:
+      - 443:443
+    volumes:
+    # Your SSL File
+    # {{%REPLACE_YOUR_SSL_PEM%}} AND {{%REPLACE_YOUR_SSL_KEY%}}
+      - ./Proxy/ssl/{{%REPLACE_YOUR_SSL_PEM%}}:/development/Halo-Blog/Proxy/ssl/{{%REPLACE_YOUR_SSL_PEM%}}
+      - ./Proxy/ssl/{{%REPLACE_YOUR_SSL_KEY%}}:/development/Halo-Blog/Proxy/ssl/{{%REPLACE_YOUR_SSL_KEY%}}
+      - ./Proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./Proxy/html:/usr/share/nginx/html
+      - ./Proxy/temp:/var/cache/nginx
+      - ./Proxy/logs:/var/log/nginx
+
+  mysql:
+    image: mariadb:10.9
+    container_name: Halo-Database
+    restart: always
+    networks:
+      default:
+        ipv4_address: 172.10.4.100
+    ports:
+      - 5000:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: G4H8H9G4SWT8HJIIUUOI8WR4S89HDF1H151A99EQ19ES6X60G4H8RGF4S9DF1F9
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - ./Database:/var/lib/mysql
+
+  halo:
+    image: halohub/halo:2.11
+    container_name: Halo-Blog
+    restart: on-failure:3
+    networks:
+      default:
+        ipv4_address: 172.10.4.101
+    volumes:
+      - ./Halo:/root/.halo2
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:mysql://172.10.4.100:3306/Halo-Blog
+      - --spring.r2dbc.username=root
+      - --spring.r2dbc.password=G4H8H9G4SWT8HJIIUUOI8WR4S89HDF1H151A99EQ19ES6X60G4H8RGF4S9DF1F9
+      - --spring.sql.init.platform=mysql
+      - --halo.external-url=http://172.10.4.101:80/
+      - --server.port=80
