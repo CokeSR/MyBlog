@@ -1,15 +1,3 @@
-## 🔥 预览
-
-|    站点名称    |          站点地址           |
-|:----------:|:-----------------------:|
-|   Coke    | https://liuzhihang.com  |
-|     流殃     |  https://shyblog.world  |
-|     羡羡     | https://www.hydsb0.com/ |
-|  Top John  |   https://op-lab.top    |
-|   Roozen   |   https://roozen.top    |
-|   Lanbin   | https://lib.lanbin.top  |
-| Carol`s 小屋 | https://blog.cnkj.site  |
-
 ## 👋 简介
 
 适用于 [Halo2.x](https://github.com/halo-dev/halo) 的博客主题
