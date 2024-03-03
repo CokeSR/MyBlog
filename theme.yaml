@@ -3,13 +3,11 @@ kind: Theme
 metadata:
   name: theme-hao
   annotations:
-    # Add supports for Halo App Store
-    # https://halo.run/store/apps/app-MgZJX
     "store.halo.run/app-id": "app-MgZJX"
 spec:
   displayName: 个人博客测试环境
   author:
-    name: Gang.Liu
+    name: Coke
     website: https://www.cokeserver.com
   customTemplates:
     page:
@@ -45,7 +43,7 @@ spec:
         description: 最近评论页面
         screenshot:
         file: new_comment.html
-  description: 基于Halo 2.x框架 测试环境用
+  description: 基于Halo 2.x框架
   logo: https://www.cokeserver.com/upload/logo.jpg
   website: https://www.cokeserver.com
   repo: https://github.com/CokeSR/MyBlog
